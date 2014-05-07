@@ -116,7 +116,7 @@ ERNO.renderers.WebGL = function( cubelets, cube ){
 
 		composer.pass( bloomPass );
 		composer.pass( vignettePass );
-		// composer.pass( dirtPass );
+		composer.pass( dirtPass );
 		composer.pass( fxaaPass );
 
 
