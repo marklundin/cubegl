@@ -7,7 +7,7 @@ window.onload = function(){
 
 
 	container.appendChild( cube.domElement );
-
+	deviceMotion( cube, container );
 
 	window.cube = cube;
 	
