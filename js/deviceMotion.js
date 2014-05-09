@@ -40,38 +40,15 @@ function deviceMotion( cube, element ){
 	}
 	
 
-	if( isDeviceOrientationSupported ){
 
-		cube.autoRotateObj3D.rotation.reorder( "YXZ" );
-		cube.rotation.set( 0, 0, 0 );
+	element.addEventListener( 'mousemove', function( evt ){
 
+		if( !api.paused ){
+			x = event.pageX / bounds.width  * 2.0 - 1.0;
+			y = event.pageY / bounds.height * 2.0 - 1.0;
+		}
 
-		window.addEventListener( 'orientationchange', function(){
-
-			screenOrientation = window.orientation || 0;
-
-		});
-
-
-		window.addEventListener( 'deviceorientation', function( rawEvtData ){
-
-			deviceOrientation = rawEvtData;
-
-		})
-
-
-	}else{
-
-		element.addEventListener( 'mousemove', function( evt ){
-
-			if( !api.paused ){
-				x = event.pageX / bounds.width  * 2.0 - 1.0;
-				y = event.pageY / bounds.height * 2.0 - 1.0;
-			}
-
-		})
-
-	}
+	})
 
 
 	// The angles alpha, beta and gamma form a set of intrinsic Tait-Bryan angles of type Z-X'-Y''
@@ -115,8 +92,8 @@ function deviceMotion( cube, element ){
 			target.y *= x;
 			target.x *= y;
 
-			cube.autoRotateObj3D.rotation.y += ( target.y - cube.autoRotateObj3D.rotation.y ) * api.decay;
-			cube.autoRotateObj3D.rotation.x += ( target.x - cube.autoRotateObj3D.rotation.x ) * api.decay;
+			cube.rotation.y += ( target.y - cube.rotation.y ) * api.decay;
+			cube.rotation.x += ( target.x - cube.rotation.x ) * api.decay;
 			
 			}
 

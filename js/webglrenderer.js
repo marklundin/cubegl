@@ -29,7 +29,7 @@ ERNO.renderers.WebGL = function( cubelets, cube ){
 			blue : 		new materialType({ color: ERNO.BLUE.hex, 	map: texture }),
 			orange : 	new materialType({ color: ERNO.ORANGE.hex, 	map: texture }),
 			yellow : 	new materialType({ color: ERNO.YELLOW.hex, 	map: texture }),
-			NA : 		new materialType({ color: 0xcccccc, 	 	map: texture })
+			NA : 		new materialType({ color: 0x000000, 	 	map: texture })
 		}
 		cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, map: texture });
 		wireframe = false,
@@ -97,7 +97,7 @@ ERNO.renderers.WebGL = function( cubelets, cube ){
 	// Render
 
 
-	function render(){
+	function render( t ){
 
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		requestAnimationFrame( render );
@@ -113,6 +113,8 @@ ERNO.renderers.WebGL = function( cubelets, cube ){
 		// blurPass.params.from = 1;
 		// blurPass.params.to = .5;
 		// composer.pass( blurPass );
+
+		// bloomPass.zoomBlur.strength = 0;
 
 		composer.pass( bloomPass );
 		composer.pass( vignettePass );
