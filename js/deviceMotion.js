@@ -18,6 +18,12 @@ function deviceMotion( cube, element ){
 		decay: 0.1
 	}
 
+	var parent = cube.object3D.parent;
+	parent.remove( cube.object3D );
+	var container = new THREE.Object3D();
+	container.add( cube.object3D );
+	parent.add( container );
+
 
 	// Returns the bounding area of the element
 	function getBoundingClientRect( element ){
@@ -80,11 +86,10 @@ function deviceMotion( cube, element ){
 	}();
 
 
-	var quat = new THREE.Quaternion();
 
-	function update(){
+	function step(){
 
-		cube.autoRotate = false
+		cube.autoRotate = false;
 
 		if( x !== undefined && y !== undefined ){
 
@@ -92,18 +97,17 @@ function deviceMotion( cube, element ){
 			target.y *= x;
 			target.x *= y;
 
-			cube.rotation.y += ( target.y - cube.rotation.y ) * api.decay;
-			cube.rotation.x += ( target.x - cube.rotation.x ) * api.decay;
+			container.rotation.x += ( target.x - container.rotation.x ) * api.decay;
+			container.rotation.y += ( target.y - container.rotation.y ) * api.decay;
 			
-			}
+			
+		}
 
-
-		requestAnimationFrame( update );
+		requestAnimationFrame( step );	
 
 	}
 
-	requestAnimationFrame( update );
-
+	step();
 	return api;
 
 }

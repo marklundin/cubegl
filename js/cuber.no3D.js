@@ -2508,7 +2508,7 @@ ERNO.Cubelet = function( cube, id, colors ){
 
 
 	// // Add the cublet to the cube object
-	this.cube.object3D.add( this );
+	this.cube.autoRotateObj3D.add( this );
 
 
 
