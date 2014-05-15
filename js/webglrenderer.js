@@ -102,27 +102,30 @@ ERNO.renderers.WebGL = function( cubelets, cube ){
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		requestAnimationFrame( render );
 
+		if( !cube.paused ){
 
-		composer.reset();
+			composer.reset();
 
-		composer.render( scene, cube.camera );
+			composer.render( scene, cube.camera );
 
-		// blurPass.params.invertBiasMap = 0;
-		// blurPass.params.amount = 20;
-		// blurPass.params.tBias = depthTexture;
-		// blurPass.params.from = 1;
-		// blurPass.params.to = .5;
-		// composer.pass( blurPass );
+			// blurPass.params.invertBiasMap = 0;
+			// blurPass.params.amount = 20;
+			// blurPass.params.tBias = depthTexture;
+			// blurPass.params.from = 1;
+			// blurPass.params.to = .5;
+			// composer.pass( blurPass );
 
-		// bloomPass.zoomBlur.strength = 0;
+			// bloomPass.zoomBlur.strength = 0;
 
-		composer.pass( bloomPass );
-		composer.pass( vignettePass );
-		composer.pass( dirtPass );
-		composer.pass( fxaaPass );
+			composer.pass( bloomPass );
+			composer.pass( vignettePass );
+			composer.pass( dirtPass );
+			composer.pass( fxaaPass );
 
 
-		composer.toScreen();
+			composer.toScreen();
+			
+		}
 
 
 	}

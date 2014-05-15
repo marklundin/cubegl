@@ -23,6 +23,7 @@ function deviceMotion( cube, element ){
 	var container = new THREE.Object3D();
 	container.add( cube.object3D );
 	parent.add( container );
+	container.rotation.copy( cube.rotation );
 
 
 	// Returns the bounding area of the element
