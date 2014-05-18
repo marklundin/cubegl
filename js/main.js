@@ -4,36 +4,47 @@ $(document).ready(function() {
 	var hasWebGL = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )() !== null;
 	
 
+	// Set up webgl flag if not available
 	$('.hasWebGL').attr( 'gl', hasWebGL );
 
 
+	// 	Get query string params
+	var hideNav = getParameterByName( 'hideNav' ) !== '';
+
+
+	// The usual suspects
 	var container = document.querySelector( '#container' ),
 		cube 	  = new ERNO.Cube({ 
-		hideInvisibleFaces:false, 
-		mouseControlsEnabled: false,
-		keyboardControlsEnabled: false,
-		renderer: hasWebGL ? ERNO.renderers.WebGL : ERNO.renderers.CSS3D
-	});
+			hideInvisibleFaces:false, 
+			mouseControlsEnabled: false,
+			keyboardControlsEnabled: false,
+			renderer: hasWebGL ? ERNO.renderers.WebGL : ERNO.renderers.CSS3D
+		}),
 		motion = deviceMotion( cube, container );
-		motion.paused = true;
-	
 
+
+	// Intiailise the demo
+	motion.paused = true;
 	cube.camera.position.z += 200;
 	container.appendChild( cube.domElement );
 
 
-	$( '.menu-link' ).bigSlide({ menuWidth: '35em' });
-	$( '.close' ).bigSlide({ menuWidth: '35em' });
-	$('.menu-link').click(function(){
-		
-		cube.paused = !cube.paused;
-		motion.paused = !motion.paused;
-		cube.mouseControlsEnabled = !cube.mouseControlsEnabled;
-		cube.keyboardControlsEnabled = !cube.keyboardControlsEnabled;
+	if( !hideNav ){
+		$( '.menu-link' ).bigSlide({ menuWidth: '35em' });
+		$( '.close' ).bigSlide({ menuWidth: '35em' });
+		$('.menu-link').click(function(){
+			
+			cube.paused = !cube.paused;
+			motion.paused = !motion.paused;
+			cube.mouseControlsEnabled = !cube.mouseControlsEnabled;
+			cube.keyboardControlsEnabled = !cube.keyboardControlsEnabled;
 
-		$( '#container' ).toggleClass( 'blur' );
+			$( '#container' ).toggleClass( 'blur' );
 
-	});
+		});
+	}else{
+		$( '.menu-link' ).hide( 0 );
+	}
 
 	// INTRO ANIMATION
 
@@ -102,5 +113,68 @@ $(document).ready(function() {
 
 
 	window.cube = cube;
+
+
+
+	// UTILS
+
+		function getParameterByName(name) {
+
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+				results = regex.exec(location.search);
+			return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+
+	// SOUND
+
+
+		var AudioContext = AudioContext || webkitAudioContext;
+		navigator.getUserMedia = ( navigator.getUserMedia
+		                           || navigator.webkitGetUserMedia 
+		                           || navigator.mozGetUserMedia 
+		                           || navigator.msGetUserMedia );
+
+		var context = new AudioContext();
+
+		mainVolume = context.createGain();
+		mainVolume.gain.value = 20;
+
+		function createSoundNode( id ) {
+
+			var source = context.createBufferSource(); 
+			source.buffer = preloader.getSound( id ).bufferData;
+
+			var volume = context.createGain();
+			volume.gain.value = 1;
+
+			source.connect( volume );
+
+			return {
+				source: source,
+				volume: volume
+			}
+
+		}	
+
+		var preloader = new Preloader( context );
+		preloader.addSound( 'atmosphere', 'assets/sound/atmosphere.mp3' );
+		preloader.load( function(){
+
+			console.log('test')
+
+			var ambientSound = createSoundNode( 'atmosphere' );
+			ambientSound.source.loop = true;
+			ambientSound.source.start();
+			ambientSound.volume.gain.value = .1;
+			ambientSound.volume.connect( mainVolume );
+
+			mainVolume.connect( context.destination );
+
+		} );
+
+
+		
 
 });
