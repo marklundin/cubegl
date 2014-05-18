@@ -150,13 +150,17 @@
 			#cubelab-logo {
 				width: 140px;
 				height: 32px;
-				padding-bottom: 40px;
+				padding-right: 40px;
+				display: inline-block;
 			}
 
 			#friends-logo {
-				width: 130px;
-				height: 32px;
-				padding-left: 30px;
+				display: inline-block;
+			}
+			
+
+			#cubelab-logo img{ 
+				margin-bottom: 10px;
 			}
 
 			a:link 		{color:#333333; font-weight: bold}      /* unvisited link */
@@ -167,20 +171,16 @@
 
 		</style>
 
-
-
 	<head>
 	<body class='graydient'>
 
 		<nav id="menu" class="panel" role="navigation">
 			<div>
 				<!-- <i class="close right fa fa-times fa-2x"></i> -->
-				<h1>CUBER</h1>
-				Cuber is an interactive programmable Rubiks cube built using  
-
-				<p>CubeGL is an interactive visual experiment built using <a href='http://www.chrome/cubelab'>Cuber</a> and three.js</p>
-				<p>It uses the custom rendering feature to create a different rendering output
-				<p>Built by <a href='http://mark-lundin.com'>mark lundin</a> with some friends at Google.</p>
+				<h1>Cuber</h1>
+				<p>This is an WebGL version of Cuber, an interactive programmable Rubiks cube. It was built using and <a href='http://threejs.org', target='_blank' >three.js</a> uses a lot of post processing taken from <a href'https://github.com/spite/Wagner' target="_blank">Wagner.js</a>.</p>
+				<p>Cuber has a modular backend the allows various rendering output such as css, svg, canvas, or - as you can see here - WebGL
+				<p>Cuber and CubeGL was built by <a href='http://mark-lundin.com'>mark lundin</a> with some friends at Google.</p>
 				<br/>
 				<a href='https://twitter.com/intent/user?screen_name=mark_lundin'><i class="fa fa-twitter"></i></a>
 				<p class='hasWebGL'>It seems your browser does not support WebGL</p>
@@ -190,8 +190,8 @@
 						<a href="https://twitter.com/share" class="twitter-share-button" data-via="mark_lundin">Tweet</a>
 					</div> -->
 					<div id="about-footer">
-						<span id="cubelab-logo"><a href="http://www.chrome.com/cubelab"><img src="assets/cubelab_black.png"></a></span>
-						<span id="friends-logo"><a href="http://www.google.com"><img src="assets/friends_black.png"></a></span>
+						<div id="cubelab-logo"><a href="http://www.chrome.com/cubelab"><img src="assets/cubelab_black.png"></a></div>
+						<div id="friends-logo"><a href="http://www.google.com"><img src="assets/friends_black.png"></a></div>
 					</div>
 				</div>
 			<div>
